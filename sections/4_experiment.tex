@@ -1,1 +1,69 @@
-\section{Initial Benchmark Experiments}
+\section{Initial Benchmark Experiments on \sc{ConflictQA}}
+\label{sec:experiment}
+
+We study pluralistic groundedness as an evidence aggregation problem: given a set
+of retrieved documents that support competing positions, does a model produce
+an answer that faithfully reflects the available evidence? We evaluate this
+question using ConflictQA \citep{wan-etal-2024-evidence}, a benchmark designed
+to measure how language models reason over conflicting evidence.
+
+\subsection{ConflictQA}
+
+ConflictQA consists of contested yes-or-no questions paired with evidence
+passages that support opposing answers. The questions span nineteen domains across the social 
+and natural sciences, humanities, and applied fields. Each example contains a query, a set of
+passages supporting a \textit{yes} answer, and a set of passages supporting a
+\textit{no} answer. For example, a question such as \textit{Is aspartame linked
+to cancer?} is paired with evidence representing both the claim that such a link
+exists and the claim that current evidence does not support such a link.
+
+\subsection{Evidence Aggregation Probes}
+
+We construct controlled probes that vary properties of the retrieved evidence
+while keeping the underlying question fixed. These probes test whether models
+respond to evidence itself or to incidental features of its presentation.
+
+\paragraph{Expertise and Rhetorical Authority.}
+We next examine how models weight signals of authority when aggregating
+conflicting evidence. Authority can be a legitimate component of evidence
+aggregation: for some questions, domain expertise should influence how
+evidence is weighted. For example, when evaluating whether aspartame is linked
+to cancer, the judgment of a qualified scientist may deserve more weight than
+the opinion of a non-expert. However, models may also mistake rhetorical
+confidence or formal style for expertise.
+
+To separate these effects, we create evidence variants that modify the
+presentation style of passages while holding their underlying claims constant.
+The authoritative condition uses formal, confident language, while the casual
+condition uses conversational language. This probe tests whether models respond
+to authority cues appropriately.
+
+
+\paragraph{Evidence Balance.}
+We next vary the number of passages supporting each answer. We denote an
+evidence configuration as $y$ vs. $n$, where $y$ is the number of passages
+supporting a yes answer and $n$ is the number supporting a no answer. We
+evaluate six configurations:
+
+\begin{itemize}
+\item $3v3$: balanced evidence with three passages supporting each answer;
+\item $2v2$: balanced evidence with two passages supporting each answer;
+\item $2v0$: evidence supporting yes only;
+\item $0v2$: evidence supporting no only;
+\item $4v2$: asymmetric evidence favoring yes;
+\item $2v4$: asymmetric evidence favoring no.
+\end{itemize}
+
+The balanced conditions test whether models produce consistent judgments when
+the amount of evidence changes but the balance of perspectives remains fixed.
+The asymmetric conditions test whether models track differences in evidence
+coverage, while the one-sided conditions test whether models introduce
+unsupported disagreement when only one position is represented.
+
+Together, these probes test whether models aggregate evidence according to
+appropriate signals rather than relying on simple heuristics. A faithful
+aggregator should respond to meaningful differences between evidence sources,
+such as expertise when domain knowledge is relevant, while avoiding
+unwarranted sensitivity to superficial features such as rhetorical confidence.
+It should also adjust its conclusions when the distribution of evidence changes
+without introducing unsupported perspectives.

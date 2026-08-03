@@ -117,6 +117,67 @@ author = {Rachel Freedman and Jana Schaich Borg and Walter Sinnott-Armstrong and
 keywords = {Moral AI, Human-compatible AI, Computational social choice, Preference aggregation, Kidney exchanges},
 abstract = {The efficient and fair allocation of limited resources is a classical problem in economics and computer science. In kidney exchanges, a central market maker allocates living kidney donors to patients in need of an organ. Patients and donors in kidney exchanges are prioritized using ad-hoc weights decided on by committee and then fed into an allocation algorithm that determines who gets what—and who does not. In this paper, we provide an end-to-end methodology for estimating weights of individual participant profiles in a kidney exchange. We first elicit from human subjects a list of patient attributes they consider acceptable for the purpose of prioritizing patients (e.g., medical characteristics, lifestyle choices, and so on). Then, we ask subjects comparison queries between patient profiles and estimate weights in a principled way from their responses. We show how to use these weights in kidney exchange market clearing algorithms. We then evaluate the impact of the weights in simulations and find that the precise numerical values of the weights we computed matter little, other than the ordering of profiles that they imply. However, compared to not prioritizing patients at all, there is a significant effect, with certain classes of patients being (de)prioritized based on the human-elicited value judgments.}
 }
+@inproceedings{carbonell1998mmr,
+author = {Carbonell, Jaime and Goldstein, Jade},
+title = {The use of MMR, diversity-based reranking for reordering documents and producing summaries},
+year = {1998},
+isbn = {1581130155},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+url = {https://doi.org/10.1145/290941.291025},
+doi = {10.1145/290941.291025},
+booktitle = {Proceedings of the 21st Annual International ACM SIGIR Conference on Research and Development in Information Retrieval},
+pages = {335–336},
+numpages = {2},
+location = {Melbourne, Australia},
+series = {SIGIR '98}
+}
+@article{zhai2003subtopic,
+author = {Zhai, ChengXiang and Cohen, William W. and Lafferty, John},
+title = {Beyond Independent Relevance: Methods and Evaluation Metrics for Subtopic Retrieval},
+year = {2015},
+issue_date = {June 2015},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+volume = {49},
+number = {1},
+issn = {0163-5840},
+url = {https://doi.org/10.1145/2795403.2795405},
+doi = {10.1145/2795403.2795405},
+abstract = {We present a non-traditional retrieval problem we call subtopic retrieval. The subtopic retrieval problem is concerned with finding documents that cover many different subtopics of a query topic. In such a problem, the utility of a document in a ranking is dependent on other documents in the ranking, violating the assumption of independent relevance which is assumed in most traditional retrieval methods. Subtopic retrieval poses challenges for evaluating performance, as well as for developing effective algorithms. We propose a framework for evaluating subtopic retrieval which generalizes the traditional precision and recall metrics by accounting for intrinsic topic difficulty as well as redundancy in documents. We propose and systematically evaluate several methods for performing subtopic retrieval using statistical language models and a maximal marginal relevance (MMR) ranking strategy. A mixture model combined with query likelihood relevance ranking is shown to modestly outperform a baseline relevance ranking on a data set used in the TREC interactive track.},
+journal = {SIGIR Forum},
+month = jun,
+pages = {2–9},
+numpages = {8},
+keywords = {Subtopic retrieval, language models, maximal marginal relevance}
+}
+
+@inproceedings{song2011postranking,
+author = {Song, Yang and Zhou, Dengyong and He, Li-wei},
+title = {Post-ranking query suggestion by diversifying search results},
+year = {2011},
+isbn = {9781450307574},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+url = {https://doi.org/10.1145/2009916.2010025},
+doi = {10.1145/2009916.2010025},
+abstract = {Query suggestion refers to the process of suggesting related queries to search engine users. Most existing researches have focused on improving the relevance of suggested queries. In this paper, we introduce the concept of diversifying the content of the search results from suggested queries while keeping the suggestion relevant. Our framework first retrieves a set of query candidates from search engine logs using random walk and other techniques. We then re-rank the suggested queries by ranking them in the order which maximizes the diversification function that measures the difference between the original search results and the results from suggested queries. The diversification function we proposed includes features like ODP category, URL and domain similarity and so on. One important outcome from our research which contradicts with most existing researches is that, with the increase of suggestion relevance, the similarity between the queries actually decreases. Experiments are conducted on a large set of human-labeled data, which is randomly sampled from a commercial search engine's log. Results indicate that the post-ranking framework significantly improves the relevance of suggested queries by comparing to existing models.},
+booktitle = {Proceedings of the 34th International ACM SIGIR Conference on Research and Development in Information Retrieval},
+pages = {815–824},
+numpages = {10},
+keywords = {random walk, query suggestion, post-ranking re-ordering, learning-to-rank},
+location = {Beijing, China},
+series = {SIGIR '11}
+}
+@article{bakker2022finetuning,
+  title={Fine-tuning language models to find agreement among humans with diverse preferences},
+  author={Bakker, Michiel and Chadwick, Martin and Sheahan, Hannah and Tessler, Michael and Campbell-Gillingham, Lucy and Balaguer, Jan and McAleese, Nat and Glaese, Amelia and Aslanides, John and Botvinick, Matt and others},
+  journal={Advances in neural information processing systems},
+  volume={35},
+  pages={38176--38189},
+  year={2022}
+}
+
 @inproceedings{brill2023proportionality,
   title={Proportionality in approval-based participatory budgeting},
   author={Brill, Markus and Forster, Stefan and Lackner, Martin and Maly, Jan and Peters, Jannik},
@@ -143,4 +204,14 @@ abstract = {The efficient and fair allocation of limited resources is a classica
   pages={59--64},
   year={2018},
   publisher={Nature Publishing Group UK London}
+}
+@incollection{godfrey-smith2010causal,
+  author    = {Peter Godfrey-Smith},
+  title     = {Causal Pluralism},
+  booktitle = {The Oxford Handbook of Causation},
+  editor    = {Helen Beebee and Christopher Hitchcock and Peter Menzies},
+  publisher = {Oxford University Press},
+  address   = {Oxford},
+  year      = {2010},
+  pages      = {326--337}
 }
