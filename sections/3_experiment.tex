@@ -1,16 +1,19 @@
 \section{Initial Benchmark Experiments on \sc{ConflictingQA}}
 \label{sec:experiment}
 
-We study pluralistic groundedness as a social choice problem: given a set of retrieved documents that support competing positions, does a model produce an answer that faithfully reflects the available evidence while privileging expertise as necessary? We evaluate this question using \textsc{ConflictingQA} \citep{wan-etal-2024-evidence}, a benchmark designed to measure how language models reason over conflicting evidence.
+To illustrate our social choice formulation of pluralistic groundedness, we conduct a proof-of-concept experiment on \textsc{ConflictingQA} \citep{wan-etal-2024-evidence}, a benchmark designed to evaluate retrieval-augmented generation under conflicting evidence. We view evidence aggregation as a social choice process, where retrieved passages represent competing viewpoints and the language model implements the aggregation rule that determines how much influence each viewpoint receives.
 
-%TODO: reframe this bit.
+Our experiment\footnote{TODO: Code can be found at \url{CLEAN UP CODE}.} investigates one fundamental property of this aggregation rule: whether RAG systems appropriately privilege expertise. We distinguish between \emph{epistemic} questions, which concern an objective state of the world and therefore warrant greater weight for relevant expertise (e.g., \emph{Can stalactites form underwater?}, the perspective of a geologist should dominate the one of a layperson), and \emph{aleatoric} questions, where multiple perspectives may remain simultaneously valid and expertise should not necessarily dominate the aggregation process (e.g., \emph{Can money buy happiness?}, the perspective of an economist should not automatically override that of a layperson). Under our framework, the appropriate weighting of expertise is therefore question-dependent rather than uniform across all retrieval settings.
+
+To test this hypothesis, we independently manipulate two signals of expertise within retrieved passages: byline and tone. These influence the perceived authority of the text without altering its substantive content, allowing us to examine whether RAG systems respond to genuine indicators of expertise, superficial signals of authority, or both, and whether these weighting strategies vary appropriately between epistemic and aleatoric questions.
+
+We outline the dataset and experimental design below, with a more detailed description of the experimental setup in Appendix~\ref{appendix:experiment}.
 
 \subsection{Dataset}
 
-\textsc{ConflictingQA} consists of contested yes-or-no questions paired with evidence
-passages that support opposing answers. The questions span nineteen domains across the social and natural sciences, humanities, and applied fields. Each example contains a query, a set of passages supporting a \textit{yes} answer, and a set of passages supporting a \textit{no} answer. For example, a question such as \textit{Is aspartame linked to cancer?} is paired with evidence representing both the claim that such a link exists and the claim that current evidence does not support such a link.
+\textsc{ConflictingQA} consists of contested yes-or-no questions paired with passages that support opposing answers. The questions span nineteen domains across the social and natural sciences, humanities, and applied fields. Each example contains a query, a set of passages supporting a \textit{yes} answer, and a set of passages supporting a \textit{no} answer. For example, a question such as \textit{Is aspartame linked to cancer?} is paired with evidence representing both the claim that such a link exists and the claim that current evidence does not support such a link.
 
-\begin{figure}
+\begin{figure}[ht!]
     \centering
     \includegraphics[width=0.9\linewidth]{images/experiment.png}
     \caption{Experimental Settings}
@@ -18,8 +21,6 @@ passages that support opposing answers. The questions span nineteen domains acro
 \end{figure}
 
 \subsection{Evidence Aggregation Probes}
-
-% add visual of the probes
 
 We construct controlled probes that vary properties of the retrieved evidence while keeping the underlying question fixed (see Figure~\ref{fig:experiment}). These probes test whether models respond to evidence itself or to incidental features of its presentation.
 
@@ -30,17 +31,6 @@ To separate these effects, we create evidence variants that modify the presentat
 
 
 \paragraph{Evidence Balance.}
-We next vary the number of passages supporting each answer. We denote an evidence configuration as $y$ vs. $n$, where $y$ is the number of passages supporting a yes answer and $n$ is the number supporting a no answer. We evaluate six configurations:
-
-\begin{itemize}
-\item $3v3$: balanced evidence with three passages supporting each answer;
-\item $2v2$: balanced evidence with two passages supporting each answer;
-\item $2v0$: evidence supporting yes only;
-\item $0v2$: evidence supporting no only;
-\item $4v2$: asymmetric evidence favouring yes;
-\item $2v4$: asymmetric evidence favouring no.
-\end{itemize}
-
-The balanced conditions test whether models produce consistent judgments when the amount of evidence changes but the balance of perspectives remains fixed. The asymmetric conditions test whether models track differences in evidence coverage, while the one-sided conditions test whether models introduce unsupported disagreement when only one position is represented.
+We next vary the number of passages supporting each answer. We included balanced conditions test whether models produce consistent judgments when the amount of evidence changes but the balance of perspectives remains fixed. The asymmetric conditions test whether models track differences in evidence coverage, while the one-sided conditions test whether models introduce unsupported disagreement when only one position is represented.
 
 Together, these probes test whether models aggregate evidence according to appropriate signals rather than relying on simple heuristics. A faithful aggregator should respond to meaningful differences between evidence sources, such as expertise when domain knowledge is relevant, while avoiding unwarranted sensitivity to superficial features such as rhetorical confidence. It should also adjust its conclusions when the distribution of evidence changes without introducing unsupported perspectives.

@@ -321,3 +321,54 @@ series = {SIGIR '11}
     doi = "10.18653/v1/2024.emnlp-main.240",
     pages = "4151--4171"
 }
+@article{liu-etal-2024-lost,
+    title = "Lost in the Middle: How Language Models Use Long Contexts",
+    author = "Liu, Nelson F.  and
+      Lin, Kevin  and
+      Hewitt, John  and
+      Paranjape, Ashwin  and
+      Bevilacqua, Michele  and
+      Petroni, Fabio  and
+      Liang, Percy",
+    journal = "Transactions of the Association for Computational Linguistics",
+    volume = "12",
+    year = "2024",
+    address = "Cambridge, MA",
+    publisher = "MIT Press",
+    url = "https://aclanthology.org/2024.tacl-1.9/",
+    doi = "10.1162/tacl_a_00638",
+    pages = "157--173"
+}
+@inproceedings{veseli2025positional,
+title={Positional Biases Shift as Inputs Approach Context Window Limits},
+author={Blerta Veseli and Julian Chibane and Mariya Toneva and Alexander Koller},
+booktitle={Second Conference on Language Modeling},
+year={2025},
+url={https://openreview.net/forum?id=vlUk8z8LaM}
+}
+@inproceedings{yi-etal-2026-attention,
+    title = "Attention Basin: Why Contextual Position Matters in Large Language Models",
+    author = "Yi, Zihao  and
+      Ling, Zhenqing  and
+      Zeng, Delong  and
+      Luo, Haohao  and
+      Xu, Zhe  and
+      Liu, Wei  and
+      Luan, Jian  and
+      Cao, Wanxia  and
+      Shen, Ying",
+    editor = "Liakata, Maria  and
+      Moreira, Viviane P.  and
+      Zhang, Jiajun  and
+      Jurgens, David",
+    booktitle = "Proceedings of the 64th Annual Meeting of the {A}ssociation for {C}omputational {L}inguistics (Volume 1: Long Papers)",
+    month = jul,
+    year = "2026",
+    address = "San Diego, California, United States",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/2026.acl-long.1198/",
+    doi = "10.18653/v1/2026.acl-long.1198",
+    pages = "26086--26106",
+    ISBN = "979-8-89176-390-6",
+    abstract = "The performance of Large Language Models (LLMs) is significantly sensitive to the contextual position of information in the input. To investigate the mechanism behind this positional bias, our extensive experiments reveal a consistent phenomenon we term the attention basin: when presented with a sequence of structured items (e.g., retrieved documents or few-shot examples), models systematically assign higher attention to the items at the beginning and end of the sequence, while neglecting those in the middle. Crucially, our analysis further reveals that allocating higher attention to critical information is key to enhancing model performance. Based on these insights, we introduce Attention-Driven Reranking (AttnRank), a two-stage framework that (i) estimates a model{'}s intrinsic positional attention preferences using a small calibration set, and (ii) reorders retrieved documents or few-shot examples to align the most salient content with these high-attention positions. AttnRank is a model-agnostic, training-free, and plug-and-play method with minimal computational overhead. Experiments on multi-hop QA and few-shot in-context learning tasks demonstrate that AttnRank achieves substantial improvements across 10 large language models of varying architectures and scales, without modifying model parameters or training procedures."
+}

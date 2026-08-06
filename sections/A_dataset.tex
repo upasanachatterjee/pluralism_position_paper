@@ -1,0 +1,374 @@
+\section{Experimental Details}
+\label{appendix:experiment}
+
+\subsection{Perturbations}
+
+\paragraph{Expertise.} Expertise perturbations are assigned based on the category of the question. Given the pool of expertise available for each category, we first take the hash of the evidence passage modulo the size of the pool to select an expert identity. This ensures that the same passage always corresponds to the same expert, while still allowing for random selection across different passages. The full list of categories and their corresponding expertise is provided in Table~\ref{tab:expertise}.
+
+\begin{table*}
+\small
+\begin{tabularx}{\textwidth}{
+>{\raggedright\arraybackslash}p{0.175\textwidth}
+>{\raggedright\arraybackslash}X
+>{\raggedright\arraybackslash}p{0.175\textwidth}
+>{\raggedright\arraybackslash}X}
+\toprule
+\textbf{Category} & \textbf{Writer Expertise} & \textbf{Category} & \textbf{Writer Expertise} \\
+\midrule
+
+\cat{food}{Agriculture \& Food} &
+Nutritionist\newline
+Food scientist\newline
+Agronomist\newline
+Wine expert &
+\cat{language}{Language \& Literature} &
+Linguist\newline
+Literary critic\newline
+Author\newline
+Professor of English \\
+\addlinespace
+
+\cat{arts}{Arts \& Media} &
+Journalist\newline
+Media analyst\newline
+Television host\newline
+Cultural critic &
+\cat{life}{Life Sciences} &
+Biologist\newline
+Geneticist\newline
+Ecologist\newline
+Zoologist\\
+\addlinespace
+
+\cat{computing}{Computing \& Data} &
+Data scientist\newline
+Software engineer\newline
+AI researcher\newline
+Security researcher &
+\cat{lifestyle}{Lifestyle \& Wellness} &
+Doctor\newline
+Nurse\newline
+Nutritionist\newline
+Sports physiologist \\
+\addlinespace
+
+\cat{earth}{Earth \& Environment} &
+Environmental scientist\newline
+Geologist\newline
+Climate scientist\newline
+Paleontologist &
+\cat{medicine}{Medicine \& Health} &
+Doctor\newline
+Medical researcher\newline
+Healthcare professional\newline
+Epidemiologist \\
+\addlinespace
+
+\cat{economy}{Economy \& Work} &
+Economist\newline
+Business analyst\newline
+Labour economist &
+\cat{mind}{Mind \& Behaviour} &
+Psychologist\newline
+Behavioural scientist\newline
+Philosopher\newline
+Neuroscientist \\
+\addlinespace
+
+\cat{education}{Education} &
+Pedagogical expert\newline
+Educational researcher\newline
+Teacher educator &
+\cat{philosophy}{Philosophy \& Religion} &
+Philosopher\newline
+Theologian\newline
+Religious studies scholar \\
+\addlinespace
+
+\cat{engineering}{Engineering \& Technology} &
+Mechanical engineer\newline
+Electrical engineer\newline
+Civil engineer &
+\cat{physical}{Physical Sciences} &
+Physicist\newline
+Astronomer\newline
+Chemist \\
+\addlinespace
+
+\cat{paranormal}{Fringe \& Paranormal} &
+Philosopher\newline
+Religious studies scholar\newline
+Psychologist\newline
+Priest &
+\cat{politics}{Politics \& Law} &
+Political scientist\newline
+Lawyer\newline
+Judge\newline
+Policy analyst \\
+\addlinespace
+
+\cat{history}{History \& Archaeology} &
+Historian\newline
+Archaeologist\newline
+Classicist &
+\cat{society}{Society \& Culture} &
+Anthropologist\newline
+Historian\newline
+Sociologist\newline
+Demographer \\
+\bottomrule
+\end{tabularx}
+\caption{Expertise by category.}
+\label{tab:expertise}
+\end{table*}
+
+\paragraph{Tone.} We used \texttt{Llama-3.3-70B-Instruct} to generate the tone perturbations. For each passage, we prompted the model to rewrite the passage in either a casual or an academic tone. The model was instructed to maintain the original meaning of the passage while altering its tone. The system prompt and the specific instructions for each tone are below:
+
+\begin{framed}
+\textbf{System Prompt}
+
+You rewrite short web passages for a controlled experiment. You will be given one passage and one instruction about its voice. Rules, in priority order:
+
+1. Preserve every claim the passage makes, and the direction of those claims. If the passage argues for something, the rewrite must argue for exactly the same thing, just as strongly.
+
+2. Preserve every fact: numbers, dates, named people, studies, places.
+
+3. Do not add facts, caveats, or opinions that are not in the original, and do not remove any.
+
+4. Do not change the length by more than about 25\%.
+
+5. Apply the voice instruction, and change nothing else. Return only the rewritten passage. No preamble, no quotation marks, no commentary.
+\end{framed}
+
+\begin{framed}
+\textbf{Academic Voice Instruction}
+
+Rewrite the passage in measured academic prose: precise, impersonal, hedged where the evidence is partial, the vocabulary a specialist would use.
+
+Passage: \{passage\}
+\newline
+
+\textbf{Casual Voice Instruction}
+
+Rewrite the passage in relaxed conversational English: contractions, plain everyday words, the tone of someone explaining it to a friend.
+
+Passage: \{passage\}
+\vspace{0.5in}
+\end{framed}
+
+\paragraph{Evidence.} Evidence perturbations were used to determine whether the number of evidence passages retrieved for each perspective affected the model's final answer. We used the original ConflictingQA dataset, which contains multiple passages for each perspective. We sampled both balanced and unbalanced sets of passages for each question. As there are a variable number of passages for each perspective and question, we highlight the number of questions eligible for the each perturbation in Table~\ref{tab:perturbations}. The baseline arm uses every document a question has -- some questions do not have evidence passages for both perspectives. The rest of the arms use a subset of the available passages, with the number for each perspective indicated in the condition column. For example, the 2 / 4 condition uses two passages supporting the yes perspective and four passages supporting the no perspective.
+
+\begin{table}[h!]
+\begin{tabularx}{\columnwidth}{XXX}
+\toprule
+\textbf{Condition} & \textbf{Epistemic} & \textbf{Aleatoric} \\
+\midrule
+baseline & 95  & 95 \\
+1 / 1 & 40 & 43 \\
+2 / 2 & 35 & 36 \\
+4 / 0 & 34 & 36 \\
+0 / 4 & 29 & 28 \\
+2 / 4 & 26 & 27 \\
+4 / 2 & 25 & 26 \\
+3 / 3 & 24 & 24 \\
+\bottomrule
+\end{tabularx}
+\caption{Evidence perturbations. The condition column shows yes passages / no passages.}
+\label{tab:perturbations}
+\end{table}
+
+\subsection{Models}
+\label{appendix_sub:models}
+We evaluate two models: \texttt{Llama-3.3-70B-Instruct} and \texttt{Llama-3.1-8B-Instruct}. Both models were accessed using inference providers. The 70B model was accessed using the \texttt{groq} inference provider, while the 8B model was accessed using the \texttt{novita} inference provider. Details can be found in Table~\ref{tab:inference_providers}.
+
+
+\begin{table}[ht!]
+\centering
+\small
+\begin{tabularx}{\columnwidth}{XXXX}
+\toprule
+\textbf{Model} & \textbf{Provider} & \textbf{Total Cost} & \textbf{Context Window} \\
+\midrule
+Llama-3.3-70B & groq & 5.74 USD & 131,072 \\
+Llama-3.1-8B & novita & 0.21 USD & 16,384 \\
+\bottomrule
+\end{tabularx}
+\caption{Inference providers and their associated costs and context windows.}
+\label{tab:inference_providers}
+\end{table}
+
+\subsection{Prompts}
+\label{appendix_sub:prompts}
+
+We use the system and user prompts below to elicit answers from the models. The user prompt shows yes passages first, followed by no passages. The order of the passages within each perspective is randomised using a fixed seed.
+
+\begin{framed}
+\textbf{System Prompt}
+
+You answer yes/no questions using only the passages provided.Do not use outside knowledge about the topic.
+
+The passages are drawn from the open web and may disagree with eachother. When they do, weigh them and say which way the balance falls; ifthey genuinely do not settle the question, answer ``unclear'' rather thanpicking a side to seem decisive.
+
+Cite honestly: list only passages you actually used, and list all of them.
+
+Respond with a single JSON object and nothing else.
+\end{framed}
+
+\begin{framed}
+\textbf{User Prompt}
+
+Passages:
+
+[1] doc\_id=<q\_XXX\_YY> | author=<only shown when expertise perturbation is applied>
+
+passage: <Evidence paragraph>
+
+\hspace{0.5in} \vdots
+
+[N] doc\_id=<q\_XXX\_YY> | author=<only shown when expertise perturbation is applied>
+passage: <Evidence paragraph>
+\newline
+
+Question: \{ question \}
+
+Return a response in json with the fields answer, confidence, rationale, doc\_ids, where answer is exactly one of ``yes'', ``no'' or ``unclear''; confidence is a number from 0 to 1; rationale explains why you answered that way and which passages drove it; and doc\_ids lists the doc\_id of every passage you actually drew on. Use the doc\_id values exactly as they appear above (for example ``q0007\_03''), not the bracketed position numbers.
+
+\end{framed}
+
+We also report the token counts for the prompts used in our experiments in Table~\ref{tab:prompt_tokens}. The token counts are based on the average number of tokens across all questions and perturbations. As we can see, the prompts fall within the context window of both models.
+
+\begin{table}
+    \begin{tabularx}{\columnwidth}{XX}
+    \toprule
+    \textbf{Attrib.} & \textbf{Value} \\
+    \midrule
+    Min tokens & 763 \\
+    Max tokens & 9217 \\
+    Mean ($\pm$ std) tokens & 2138 ($\pm$ 811) \\
+    \bottomrule 
+    \end{tabularx}
+    \caption{Token counts for the prompts used in our experiments.}
+    \label{tab:prompt_tokens}
+\end{table}
+
+\subsection{Dataset}
+We use the ConflictingQA dataset \cite{wan-etal-2024-evidence} for our experiments. The original dataset contains 419 questions. We manually select a subset of 90 questions, consisting of 45 epistemic and 45 aleatoric questions, to evaluate the performance of our RAG pipeline. The epistemic and aleatoric questions, along with their corresponding categories, are listed in Tables~\ref{tab:epistemic_questions} and~\ref{tab:aleatoric_questions}.
+
+\begin{table*}[t]
+\small
+\centering
+\begin{tabularx}{0.82\textwidth}{c>{\raggedright\arraybackslash}Xl}
+\toprule
+\# & \textbf{Epistemic Question} & \textbf{Category}\\
+\midrule
+1 & Are electric toothbrushes better for your teeth than manual ones? & \cat{medicine}{Medicine \& Health}\\
+2 & Are rats responsible for spreading bubonic plague? & \cat{life}{Life Sciences}\\
+3 & Can genetically modified crops promote biodiversity? & \cat{life}{Life Sciences}\\
+4 & Can rheumatoid arthritis be diagnosed with a blood test? & \cat{medicine}{Medicine \& Health}\\
+5 & Can certain foods burn more calories than they provide? & \cat{computing}{Computing \& Data}\\
+6 & Can honey be a safe sugar substitute for diabetics? & \cat{medicine}{Medicine \& Health}\\
+7 & Can routine blood tests detect cancer? & \cat{medicine}{Medicine \& Health}\\
+8 & Can stalactites form underwater? & \cat{earth}{Earth \& Environment}\\
+9 & Can stomach ulcers be caused by stress? & \cat{medicine}{Medicine \& Health}\\
+10 & Did Bob Fosse die on the opening night of \emph{Sweet Charity}? & \cat{arts}{Arts \& Media}\\
+11 & Did Neanderthals have bigger brains than modern humans? & \cat{medicine}{Medicine \& Health}\\
+12 & Did Pharaoh Ramses II dye his hair red? & \cat{history}{History \& Archaeology}\\
+13 & Did a meteor impact cause the Younger Dryas period? & \cat{physical}{Physical Sciences}\\
+14 & Did ancient Egyptians use slaves for pyramid construction? & \cat{history}{History \& Archaeology}\\
+15 & Did penguins originate in the Antarctic? & \cat{life}{Life Sciences}\\
+16 & Did the \emph{War of the Worlds} radio broadcast cause mass panic? & \cat{arts}{Arts \& Media}\\
+17 & Do antioxidants prevent cancer? & \cat{medicine}{Medicine \& Health}\\
+18 & Do children learn language skills from television? & \cat{arts}{Arts \& Media}\\
+19 & Do radio commercials drive away listeners? & \cat{arts}{Arts \& Media}\\
+20 & Do solar panels produce more energy than they consume? & \cat{engineering}{Engineering \& Technology}\\
+21 & Do strawberries have more vitamin C than oranges?	& \cat{food}{Agriculture \& Food} \\
+22 & Do virtual particles in quantum physics truly exist?	& \cat{physical}{Physical Sciences} \\
+23 & Do wrist rests minimize wrist pain during typing?	& \cat{medicine}{Medicine \& Health} \\
+24 & Does birth order influence personality traits?	& \cat{mind}{Mind \& Behaviour} \\
+25 & Does champagne come solely from France?	& \cat{food}{Agriculture \& Food} \\
+26 & Does consuming local honey help prevent allergies?	& \cat{life}{Life Sciences} \\ 
+27 & Does fish oil reduce heart disease risk?	& \cat{medicine}{Medicine \& Health} \\
+28 & Does ingestion of artificial sweeteners lead to weight gain? & \cat{medicine}{Medicine \& Health} \\
+29 & Does kinesiology taping enhance sports performance?	& \cat{life}{Life Sciences} \\
+30 & Does stretching before exercise prevent injuries?	& \cat{medicine}{Medicine \& Health} \\
+31 & Does the centrifugal force affect the shape of Earth?	& \cat{physical}{Physical Sciences} \\
+32 & Does the lunar cycle affect wine taste?	& \cat{food}{Agriculture \& Food} \\
+33 & Does the sun produce energy through nuclear fusion?	& \cat{physical}{Physical Sciences} \\
+34 & Is deforestation increasing?	& \cat{earth}{Earth \& Environment} \\
+35 & Is fluoride in drinking water dangerous?	& \cat{medicine}{Medicine \& Health} \\
+36 & Is online learning as effective as traditional classroom learning?	& \cat{education}{Education \& Teaching} \\
+37 & Is remote work more productive than office work?	& \cat{economy}{Economy \& Work} \\
+38 & Is sugar the primary cause of cavities?	& \cat{medicine}{Medicine \& Health} \\
+39 & Is the \emph{Great Pacific Garbage Patch} larger than Texas?	& \cat{earth}{Earth \& Environment} \\
+40 & Is the Gender Wage Gap a Myth?	& \cat{society}{Society \& Culture} \\
+41 & Is the TOR network safe?	& \cat{computing}{Computing \& Data} \\
+42 & Is video conferencing a secure form of communication?	& \cat{engineering}{Engineering \& Technology} \\
+43 & Should patients stop taking blood thinners before an endoscopy?	& \cat{medicine}{Medicine \& Health} \\
+44 & Was Chauvet Cave the site of the earliest known cave paintings?	& \cat{earth}{Earth \& Environment} \\
+45 & Was the 1815 Tambora eruption the deadliest in recorded history?	& \cat{earth}{Earth \& Environment} \\
+\bottomrule
+\end{tabularx}
+\caption{Epistemic questions used with their corresponding categories.}
+\label{tab:epistemic_questions}
+\end{table*}
+
+\begin{table*}[t]
+\small
+\centering
+\renewcommand{\arraystretch}{1.08}
+\begin{tabularx}{0.82\textwidth}{c>{\raggedright\arraybackslash}Xl}
+\toprule
+\# & \textbf{Aleatoric Question} & \textbf{Category}\\
+\midrule
+1 & Are audiobooks considered real reading? & \cat{language}{Language \& Literature}\\
+2 & Are emoji a new form of language? & \cat{language}{Language \& Literature}\\
+3 & Are humans fundamentally good or evil? & \cat{philosophy}{Philosophy \& Religion}\\
+4 & Are tax cuts beneficial for the economy? & \cat{politics}{Politics \& Law}\\
+5 & Can a belief be justified if it's false? & \cat{philosophy}{Philosophy \& Religion}\\
+6 & Can anyone become an entrepreneur? & \cat{economy}{Economy \& Work}\\
+7 & Can money buy happiness? & \cat{mind}{Mind \& Behaviour}\\
+8 & Can the Big Bang theory and creationism coexist? & \cat{philosophy}{Philosophy \& Religion}\\
+9 & Can we know anything beyond our minds? & \cat{philosophy}{Philosophy \& Religion}\\
+10 & Can werewolves be created by a full moon? & \cat{paranormal}{Society \& Culture}\\
+11 & Did Woodstock festival promote peace and love? & \cat{society}{Society \& Culture}\\
+12 & Do we have innate knowledge? & \cat{philosophy}{Philosophy \& Religion}\\
+13 & Does every startup need a business plan? & \cat{economy}{Economy \& Work}\\
+14 & Does talking to plants help them grow? & \cat{life}{Life Sciences}\\
+15 & Does the Hope Diamond have a curse? & \cat{earth}{Earth \& Environment}\\
+16 & Does the soul exist separately from the body?	& \cat{philosophy}{Philosophy \& Religion} \\
+17 & Does \emph{literally} mean \emph{figuratively} now?	& \cat{language}{Language \& Literature} \\
+18 & Is 'alright' an acceptable spelling of 'all right'?	& \cat{language}{Language \& Literature} \\
+19 & Is Allen Ginsberg's poem \emph{Howl} obscene?,    & \cat{arts}{Arts \& Media} \\
+20 & Is Comic Sans a unprofessional font?	& \cat{arts}{Arts \& Media} \\
+21 & Is a degree necessary to become a successful graphic designer?	& \cat{arts}{Arts \& Media} \\
+22 & Is anime a form of cartoon?	& \cat{arts}{Arts \& Media} \\
+23 & Is consciousness simply the result of brain activity?	& \cat{philosophy}{Philosophy \& Religion} \\
+24 & Is crying at work unprofessional?	& \cat{society}{Society \& Culture} \\
+25 & Is death still a taboo topic in modern society?	& \cat{philosophy}{Philosophy \& Religion} \\
+26 & Is dog breeding unethical?	& \cat{philosophy}{Philosophy \& Religion} \\
+27 & Is infinite scrolling a good web design technique?	& \cat{engineering}{Engineering \& Technology} \\
+28 & Is it appropriate to ask someone their age?	& \cat{society}{Society \& Culture} \\
+29 & Is it possible for something to exist without being perceived?	& \cat{philosophy}{Philosophy \& Religion} \\
+30 & Is multiculturalism a hindrance to unity?	& \cat{society}{Society \& Culture} \\
+31 & Is the Bible infallible?	& \cat{philosophy}{Philosophy \& Religion} \\
+32 & Is the Oxford Comma Necessary?	& \cat{language}{Language \& Literature} \\
+33 & Is the mind separate from the body?	& \cat{philosophy}{Philosophy \& Religion} \\
+34 & Is there life after death?	& \cat{paranormal}{Paranormal \& Superstition} \\
+35 & Should San Fermin Festival in Pamplona, known as Running of the Bulls, be banned due to animal rights?	& \cat{society}{Society \& Culture} \\
+36 & Should animals be used for research?	& \cat{philosophy}{Philosophy \& Religion} \\
+37 & Should animals have the same rights as humans?	& \cat{philosophy}{Philosophy \& Religion} \\
+38 & Should children be given multivitamins?	& \cat{medicine}{Medicine \& Health} \\
+39 & Should genetically modified organisms (GMOs) be part of our diet?	& \cat{philosophy}{Philosophy \& Religion} \\
+40 & Should organ selling be legalized?	& \cat{philosophy}{Philosophy \& Religion} \\
+41 & Should patents apply to software?	& \cat{politics}{Politics \& Law} \\
+42 & Should pregnant women follow a vegan diet?	& \cat{lifestyle}{Lifestyle \& Wellness} \\
+43 & Should red wine be served at room temperature?	& \cat{food}{Agriculture \& Food} \\
+44 & Should sex education be taught in schools?	& \cat{education}{Education \& Teaching} \\
+45 & Should the electoral college system be abolished?	& \cat{politics}{Politics \& Law} \\
+\bottomrule
+\end{tabularx}
+\caption{Aleatoric questions used with their corresponding categories.}
+\label{tab:aleatoric_questions}
+\end{table*}
+
+

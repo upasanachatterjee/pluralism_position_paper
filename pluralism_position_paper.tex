@@ -12,6 +12,34 @@
 \usepackage{microtype}
 \usepackage{inconsolata}
 \usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{framed}
+\usepackage{subcaption}
+
+% Category colours (pastel)
+\definecolor{medicine}{HTML}{F8D7DA}
+\definecolor{life}{HTML}{D4EDDA}
+\definecolor{earth}{HTML}{D6EAF8}
+\definecolor{physical}{HTML}{E8DAEF}
+\definecolor{engineering}{HTML}{FCF3CF}
+\definecolor{computing}{HTML}{D1F2EB}
+\definecolor{arts}{HTML}{F9E79F}
+\definecolor{history}{HTML}{F5CBA7}
+\definecolor{food}{HTML}{FADBD8}
+\definecolor{mind}{HTML}{D6EAF8}
+\definecolor{economy}{HTML}{D5F5E3}
+\definecolor{philosophy}{HTML}{E5D4EF}
+\definecolor{society}{HTML}{F8CFA6}
+\definecolor{education}{HTML}{D6EAF8}
+\definecolor{politics}{HTML}{EADCF8}
+\definecolor{lifestyle}{HTML}{FFF3B0}
+\definecolor{paranormal}{HTML}{F5B7B1}
+\definecolor{language}{HTML}{FFE5B4}
+
+\newcommand{\cat}[2]{%
+{\setlength{\fboxsep}{1.5pt}\colorbox{#1}{\scriptsize #2}}}
 
 \title{Why Are You Asking? When and Where Pluralism is Needed In RAG Pipelines}
 
@@ -67,6 +95,6 @@ Lorem Ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor i
 \bibliography{custom}
 
 \appendix
-
+\input{sections/A_dataset}
 
 \end{document}
