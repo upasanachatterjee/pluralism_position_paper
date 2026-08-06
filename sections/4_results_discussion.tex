@@ -23,17 +23,9 @@ The academic register shows an unexpected effect reversal. When the academic reg
 
 As we discuss in Appendix~\ref{appendix_sub:prompts}, the yes passages are always shown first, followed by the no passages. This could be potentially explained by the lost-in-the-middle effect, compounded with the recency effect \cite{liu-etal-2024-lost,veseli2025positional,yi-etal-2026-attention}. In the smaller 8B model, many of the prompts approach the maximum context window (see Appendix~\ref{appendix_sub:models} and Appendix~\ref{appendix_sub:prompts} for details on the model context windows and prompt sizes), which might be why effect sizes are larger than for the 70B model. However, the register perturbation on no moving answers to yes is not explained by this, as the yes passages are always shown first, and warrants further investigation. 
 
-
-
-\begin{itemize}
-    \item tables showing how results vary on epistemic/aleatoric splits 
-    \item does the domain/topic matter?
-    \item how does authoritative tone/expertise metadata influence?
-\end{itemize}
-
 \section{Discussion}
 
 \begin{itemize}
-    \item add the note about how shuffling has an impact
+    \item add the note about how ordering has an impact -- this will naturally be a limitation of RAG systems and *may* contribute to a lack of pluralistic groundedness. Would depend on the retrieval layer.
     \item we discuss only one social choice feature "expertise" across a number of questions in multiple domains, larger experiments must be done to see how expertise will interact with other feature (e.g. given an epistemic question about buddhism, should a practising buddhist's opinion be valued more than a christian who is a buddhist scholar? given an aleatoric question about giving candy to kids of particular days should a parent's opinion be more valued than a non-parent's opinion?)
 \end{itemize}
