@@ -1,4 +1,5 @@
 \section{Results}
+\label{sec:results}
 
 \begin{figure*}
     \begin{minipage}{0.5\textwidth}
@@ -17,11 +18,17 @@
     \label{fig:expertise_results}
 \end{figure*}
 
-Our results for our first experiment manipulating expertise signals are found in Figure~\ref{fig:expertise_results}. We find that models inconsistently privilege expertise when it is relevant to the question, but that this result is dependant on model size. The smaller \texttt{Llama-3.1-8b} model privileges expert bylines for both epistemic and aleatoric questions, and this effect is magnified when there are more passages supporting each answer and for the epistemic questions. The larger \texttt{Llama-3.3-70b} model does not significant movement on the byline perturbation.
+Figure~\ref{fig:expertise_results} shows results for the first experiment, which manipulates expertise signals. Models privilege expertise inconsistently when it is relevant to the question, and the pattern depends on model size. The smaller \texttt{Llama-3.1-8B} model privileges expert bylines for both epistemic and aleatoric questions. This effect grows as more passages support each answer, and it is stronger for the epistemic questions. The larger \texttt{Llama-3.3-70B} model shows no significant movement on the byline perturbation.
 
-The academic register shows an unexpected effect reversal. When the academic register is applied to the yes passages, neither model shows significant movement towards yes, but when the academic register is applied to the no passages, both models show significant movement towards \emph{yes}. Similarly, the smaller \texttt{Llama-3.1-8b} model shows significant movement towards \emph{yes} when the expert byline is applied to the no passages. 
+The academic register shows an unexpected effect reversal. Applied to the \emph{yes} passages, it moves neither model significantly towards \emph{yes}; applied to the \emph{no} passages, it moves both models significantly towards \emph{yes}. The smaller \texttt{Llama-3.1-8B} model behaves the same way under the expert byline, moving significantly towards \emph{yes} when the byline is applied to the \emph{no} passages.
 
-As we discuss in Appendix~\ref{appendix_sub:prompts}, the yes passages are always shown first, followed by the no passages. This could be potentially explained by the lost-in-the-middle effect, compounded with the recency effect \cite{liu-etal-2024-lost,veseli2025positional,yi-etal-2026-attention}. In the smaller 8B model, many of the prompts approach the maximum context window (see Appendix~\ref{appendix_sub:models} and Appendix~\ref{appendix_sub:prompts} for details on the model context windows and prompt sizes), which might be why effect sizes are larger than for the 70B model. However, the register perturbation on no moving answers to yes is not explained by this, as the yes passages are always shown first, and warrants further investigation. 
+As we discuss in Appendix~\ref{appendix_sub:prompts}, the \emph{yes} passages always appear first, followed by the \emph{no} passages. The lost-in-the-middle effect, compounded by the recency effect, may explain this asymmetry \citep{liu-etal-2024-lost,veseli2025positional,yi-etal-2026-attention}. In the smaller 8B model, many prompts approach the maximum context window (see Appendices~\ref{appendix_sub:models} and~\ref{appendix_sub:prompts} for context windows and prompt sizes), which might be why its effect sizes exceed those of the 70B model. This account does not explain why the register perturbation on the \emph{no} passages moves answers towards \emph{yes}; that result warrants further investigation.
+
+
+\begin{itemize}
+    \item add unbalanced experiment results
+    \item add register x byline results <-- these might be more interesting
+\end{itemize}
 
 \section{Discussion}
 

@@ -3,7 +3,7 @@
 
 \subsection{Perturbations}
 
-\paragraph{Expertise.} Expertise perturbations are assigned based on the category of the question. Given the pool of expertise available for each category, we first take the hash of the evidence passage modulo the size of the pool to select an expert identity. This ensures that the same passage always corresponds to the same expert, while still allowing for random selection across different passages. The full list of categories and their corresponding expertise is provided in Table~\ref{tab:expertise}.
+\paragraph{Expertise.} Expertise perturbations are assigned based on the category of the question. Given the pool of expertise available for each category, we first take the hash of the evidence passage modulo the size of the pool to select an expert identity. This ensures that the same passage always corresponds to the same expert, while still varying the expert across passages. The full list of categories and their corresponding expertise is provided in Table~\ref{tab:expertise}.
 
 \begin{table*}
 \small
@@ -122,7 +122,7 @@ Demographer \\
 \label{tab:expertise}
 \end{table*}
 
-\paragraph{Tone.} We used \texttt{Llama-3.3-70B-Instruct} to generate the tone perturbations. For each passage, we prompted the model to rewrite the passage in either a casual or an academic tone. The model was instructed to maintain the original meaning of the passage while altering its tone. The system prompt and the specific instructions for each tone are below:
+\paragraph{Register.} We use \texttt{Llama-3.3-70B-Instruct} to generate the register perturbations. For each passage, we prompt the model to rewrite the passage in either a casual or an academic register, instructing it to preserve the original meaning. The system prompt and the instruction for each register appear below:
 
 \begin{framed}
 \textbf{System Prompt}
@@ -141,14 +141,14 @@ You rewrite short web passages for a controlled experiment. You will be given on
 \end{framed}
 
 \begin{framed}
-\textbf{Academic Voice Instruction}
+\textbf{Academic Register Instruction}
 
 Rewrite the passage in measured academic prose: precise, impersonal, hedged where the evidence is partial, the vocabulary a specialist would use.
 
 Passage: \{passage\}
 \newline
 
-\textbf{Casual Voice Instruction}
+\textbf{Casual Register Instruction}
 
 Rewrite the passage in relaxed conversational English: contractions, plain everyday words, the tone of someone explaining it to a friend.
 
@@ -156,14 +156,14 @@ Passage: \{passage\}
 \vspace{0.5in}
 \end{framed}
 
-\paragraph{Evidence.} Evidence perturbations were used to determine whether the number of evidence passages retrieved for each perspective affected the model's final answer. We used the original ConflictingQA dataset, which contains multiple passages for each perspective. We sampled both balanced and unbalanced sets of passages for each question. As there are a variable number of passages for each perspective and question, we highlight the number of questions eligible for the each perturbation in Table~\ref{tab:perturbations}. The baseline arm uses every document a question has -- some questions do not have evidence passages for both perspectives. The rest of the arms use a subset of the available passages, with the number for each perspective indicated in the condition column. For example, the 2 / 4 condition uses two passages supporting the yes perspective and four passages supporting the no perspective.
+\paragraph{Evidence.} Evidence perturbations test whether the number of passages retrieved for each perspective affects the model's final answer. We draw on the original ConflictingQA dataset, which contains multiple passages for each perspective, and sample both balanced and unbalanced sets of passages for each question. Because the number of passages varies across perspectives and questions, Table~\ref{tab:perturbations} reports how many questions are eligible for each perturbation. The baseline arm uses every passage a question has; some questions lack passages for one of the two perspectives. The remaining arms use a subset, with the number for each perspective given in the condition column. The 2 / 4 condition, for example, uses two passages supporting the \emph{yes} perspective and four supporting the \emph{no} perspective.
 
 \begin{table}[h!]
 \begin{tabularx}{\columnwidth}{XXX}
 \toprule
 \textbf{Condition} & \textbf{Epistemic} & \textbf{Aleatoric} \\
 \midrule
-baseline & 95  & 95 \\
+baseline & 90  & 90 \\
 1 / 1 & 40 & 43 \\
 2 / 2 & 35 & 36 \\
 4 / 0 & 34 & 36 \\
@@ -179,7 +179,7 @@ baseline & 95  & 95 \\
 
 \subsection{Models}
 \label{appendix_sub:models}
-We evaluate two models: \texttt{Llama-3.3-70B-Instruct} and \texttt{Llama-3.1-8B-Instruct}. Both models were accessed using inference providers. The 70B model was accessed using the \texttt{groq} inference provider, while the 8B model was accessed using the \texttt{novita} inference provider. Details can be found in Table~\ref{tab:inference_providers}.
+We evaluate two models: \texttt{Llama-3.3-70B-Instruct} and \texttt{Llama-3.1-8B-Instruct}. We access the 70B model through the \texttt{groq} inference provider and the 8B model through the \texttt{novita} inference provider. Table~\ref{tab:inference_providers} gives the details.
 
 
 \begin{table}[ht!]
@@ -235,7 +235,7 @@ Return a response in json with the fields answer, confidence, rationale, doc\_id
 
 \end{framed}
 
-We also report the token counts for the prompts used in our experiments in Table~\ref{tab:prompt_tokens}. The token counts are based on the average number of tokens across all questions and perturbations. As we can see, the prompts fall within the context window of both models.
+Table~\ref{tab:prompt_tokens} reports token counts for the prompts used in our experiments, averaged across all questions and perturbations. Every prompt falls within the context window of both models.
 
 \begin{table}
     \begin{tabularx}{\columnwidth}{XX}
@@ -252,7 +252,7 @@ We also report the token counts for the prompts used in our experiments in Table
 \end{table}
 
 \subsection{Dataset}
-We use the ConflictingQA dataset \cite{wan-etal-2024-evidence} for our experiments. The original dataset contains 419 questions. We manually select a subset of 90 questions, consisting of 45 epistemic and 45 aleatoric questions, to evaluate the performance of our RAG pipeline. The epistemic and aleatoric questions, along with their corresponding categories, are listed in Tables~\ref{tab:epistemic_questions} and~\ref{tab:aleatoric_questions}.
+We use the ConflictingQA dataset \citep{wan-etal-2024-evidence} for our experiments. The original dataset contains 419 questions, from which we manually select 90: 45 epistemic and 45 aleatoric. Tables~\ref{tab:epistemic_questions} and~\ref{tab:aleatoric_questions} list these questions with their categories.
 
 \begin{table*}[t]
 \small
@@ -338,7 +338,7 @@ We use the ConflictingQA dataset \cite{wan-etal-2024-evidence} for our experimen
 16 & Does the soul exist separately from the body?	& \cat{philosophy}{Philosophy \& Religion} \\
 17 & Does \emph{literally} mean \emph{figuratively} now?	& \cat{language}{Language \& Literature} \\
 18 & Is 'alright' an acceptable spelling of 'all right'?	& \cat{language}{Language \& Literature} \\
-19 & Is Allen Ginsberg's poem \emph{Howl} obscene?,    & \cat{arts}{Arts \& Media} \\
+19 & Is Allen Ginsberg's poem \emph{Howl} obscene? & \cat{arts}{Arts \& Media} \\
 20 & Is Comic Sans a unprofessional font?	& \cat{arts}{Arts \& Media} \\
 21 & Is a degree necessary to become a successful graphic designer?	& \cat{arts}{Arts \& Media} \\
 22 & Is anime a form of cartoon?	& \cat{arts}{Arts \& Media} \\
