@@ -205,7 +205,7 @@ We use the system and user prompts below to elicit answers from the models. The 
 \begin{framed}
 \textbf{System Prompt}
 
-You answer yes/no questions using only the passages provided.Do not use outside knowledge about the topic.
+You answer yes/no questions using only the passages provided. Do not use outside knowledge about the topic.
 
 The passages are drawn from the open web and may disagree with eachother. When they do, weigh them and say which way the balance falls; ifthey genuinely do not settle the question, answer ``unclear'' rather thanpicking a side to seem decisive.
 
@@ -252,7 +252,8 @@ Table~\ref{tab:prompt_tokens} reports token counts for the prompts used in our e
 \end{table}
 
 \subsection{Dataset}
-We use the ConflictingQA dataset \citep{wan-etal-2024-evidence} for our experiments. The original dataset contains 419 questions, from which we manually select 90: 45 epistemic and 45 aleatoric. Tables~\ref{tab:epistemic_questions} and~\ref{tab:aleatoric_questions} list these questions with their categories.
+\label{appendix_sub:dataset}
+We use the ConflictingQA dataset \citep{wan-etal-2024-evidence} for our experiments. The original dataset contains 419 questions, from which we manually select 90: 45 epistemic and 45 aleatoric. Tables~\ref{tab:epistemic_questions} and~\ref{tab:aleatoric_questions} list these questions with their categories. Table~\ref{tab:category-axis} shows the number of questions per category for each question type. We note that the epistemic questions are more heavily concentrated in the medicine and life sciences categories, while the aleatoric questions are more concentrated in the philosophy and religion categories. This is a natural consequence of the question types: epistemic questions are more likely to be grounded in scientific evidence, while aleatoric questions are more likely to be grounded in social and cultural norms.
 
 \begin{table*}[t]
 \small
@@ -371,4 +372,35 @@ We use the ConflictingQA dataset \citep{wan-etal-2024-evidence} for our experime
 \label{tab:aleatoric_questions}
 \end{table*}
 
-
+\begin{table}[t]
+\centering
+\small
+\begin{tabular}{lrr}
+\toprule
+\textbf{Category Group} & \textbf{Aleatoric} & \textbf{Epistemic} \\
+\midrule
+\cat{food}{Agriculture \& Food}     & 1  & 2  \\
+\cat{arts}{Arts \& Media}           & 3  & 4  \\
+\cat{computing}{Computing \& Data}       & 0  & 3  \\
+\cat{earth}{Earth \& Environment}    & 1  & 6  \\
+\cat{economy}{Economy \& Work}         & 2  & 1  \\
+\cat{education}{Education}               & 1  & 1  \\
+\cat{engineering}{Engineering \& Technology} & 1 & 2 \\
+\cat{paranormal}{Fringe \& Paranormal}    & 1  & 0  \\
+\cat{history}{History \& Archaeology}  & 0  & 2  \\
+\cat{language}{Language \& Literature}  & 4  & 0  \\
+\cat{life}{Life Sciences}           & 1  & 3  \\
+\cat{lifestyle}{Lifestyle \& Wellness}   & 1  & 0  \\
+\cat{medicine}{Medicine \& Health}      & 1  & 12 \\
+\cat{mind}{Mind \& Behaviour}       & 1  & 1  \\
+\cat{philosophy}{Philosophy \& Religion}  & 17 & 0  \\
+\cat{physical}{Physical Sciences}       & 0  & 4  \\
+\cat{politics}{Politics \& Law}         & 4  & 0  \\
+\cat{society}{Society \& Culture}      & 6  & 1  \\
+\midrule
+\textbf{Total}          & \textbf{45} & \textbf{45} \\
+\bottomrule
+\end{tabular}
+\caption{Distribution of unique questions by category group and question axis.}
+\label{tab:category-axis}
+\end{table}

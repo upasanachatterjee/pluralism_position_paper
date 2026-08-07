@@ -2,37 +2,55 @@
 \label{sec:results}
 
 \begin{figure*}
-    \begin{minipage}{0.5\textwidth}
+    \begin{minipage}{0.33\textwidth}
         \centering
         \includegraphics[width=\linewidth]{images/byline_balanced.png}
         \subcaption{Results for byline manipulation.}
         \label{fig:byline_balanced}
     \end{minipage}
-    \begin{minipage}{0.5\textwidth}
+    \begin{minipage}{0.33\textwidth}
         \centering
         \includegraphics[width=\linewidth]{images/register_balanced.png}
         \subcaption{Results for register manipulation.}
         \label{fig:register_balanced}
     \end{minipage}
-    \caption{Expertise and rhetorical authority manipulation. Results are shown for the balanced conditions, where the number of passages supporting each answer is equal. The x-axis shows the total number of evidence passages. The y-axis shows movement relative to the unperturbed baseline.}
+    \begin{minipage}{0.33\textwidth}
+        \centering
+        \includegraphics[width=0.75\linewidth]{images/matched.png}
+        \subcaption{Difference when limited to shared categories.}
+        \label{fig:matched}
+    \end{minipage}
+    \caption{Expertise and rhetorical authority manipulation. The first two panels show the byline and register manipulations. Solid lines give results with one passage per side; dashed lines give results with three passages per side. The same questions are used at both evidence sizes. The third panel restricts the questions to categories that contain both epistemic and aleatoric questions; only ten questions pass this filter. Filled icons mark the matched condition, hollow icons the full set of selected questions. In all three panels, the x-axis shows movement towards \emph{yes} (positive) or towards \emph{no} (negative).}
     \label{fig:expertise_results}
 \end{figure*}
 
-Figure~\ref{fig:expertise_results} shows results for the first experiment, which manipulates expertise signals. Models privilege expertise inconsistently when it is relevant to the question, and the pattern depends on model size. The smaller \texttt{Llama-3.1-8B} model privileges expert bylines for both epistemic and aleatoric questions. This effect grows as more passages support each answer, and it is stronger for the epistemic questions. The larger \texttt{Llama-3.3-70B} model shows no significant movement on the byline perturbation.
+Figure~\ref{fig:expertise_results} shows results for the first experiment, which manipulates expertise signals. Models privilege expertise inconsistently when it is relevant to the question, and the pattern depends on model size. The smaller \texttt{Llama-3.1-8B} model privileges expert bylines for both epistemic and aleatoric questions. The effect grows as more passages support each answer, and it is stronger for epistemic questions. The larger \texttt{Llama-3.3-70B} model shows no significant movement under the byline perturbation.
 
-The academic register shows an unexpected effect reversal. Applied to the \emph{yes} passages, it moves neither model significantly towards \emph{yes}; applied to the \emph{no} passages, it moves both models significantly towards \emph{yes}. The smaller \texttt{Llama-3.1-8B} model behaves the same way under the expert byline, moving significantly towards \emph{yes} when the byline is applied to the \emph{no} passages.
+The academic register reverses direction unexpectedly. Applied to the \emph{yes} passages, it moves neither model significantly towards \emph{yes}; applied to the \emph{no} passages, it moves both models significantly towards \emph{yes}. The expert byline produces the same reversal in the smaller model, which moves significantly towards \emph{yes} when the byline is applied to the \emph{no} passages.
 
-As we discuss in Appendix~\ref{appendix_sub:prompts}, the \emph{yes} passages always appear first, followed by the \emph{no} passages. The lost-in-the-middle effect, compounded by the recency effect, may explain this asymmetry \citep{liu-etal-2024-lost,veseli2025positional,yi-etal-2026-attention}. In the smaller 8B model, many prompts approach the maximum context window (see Appendices~\ref{appendix_sub:models} and~\ref{appendix_sub:prompts} for context windows and prompt sizes), which might be why its effect sizes exceed those of the 70B model. This account does not explain why the register perturbation on the \emph{no} passages moves answers towards \emph{yes}; that result warrants further investigation.
+As we discuss in Appendix~\ref{appendix_sub:prompts}, the \emph{yes} passages always appear first, followed by the \emph{no} passages. The lost-in-the-middle effect, compounded by the recency effect, may explain this asymmetry \citep{liu-etal-2024-lost,veseli2025positional,yi-etal-2026-attention}. In the 8B model, many prompts approach the maximum context window (see Appendices~\ref{appendix_sub:models} and~\ref{appendix_sub:prompts} for context windows and prompt sizes), which may be why its effect sizes exceed those of the 70B model. This account does not explain why the register perturbation on the \emph{no} passages moves answers towards \emph{yes}. A second factor may confound the result: the questions are unevenly distributed across categories (see Appendix~\ref{appendix_sub:dataset}), and the register perturbation may act differently in different categories.
 
+Figure~\ref{fig:matched} restricts the questions to categories that contain both epistemic and aleatoric questions. Only ten questions pass this filter, so we draw no strong conclusions, but the inconsistencies between the two question types persist. They may therefore stem not from the distribution of questions across categories but from other factors, presentation among them. Disentangling these effects requires a larger experiment with more questions per category.
 
-\begin{itemize}
-    \item add unbalanced experiment results
-    \item add register x byline results <-- these might be more interesting
-\end{itemize}
+\begin{figure}[ht!]
+    \includegraphics[width=\linewidth]{images/register_byline_interaction.png}
+    \caption{Interaction between register and byline manipulations. The x-axis shows whether compounding helps (positive) or hurts (negative) align the model with the expert perspective.}
+    \label{fig:register_byline_interaction}
+\end{figure}
+
+We also investigate whether the register and byline manipulations interact. Figure~\ref{fig:register_byline_interaction} shows that they compound inconsistently across models and evidence directions. The smaller \texttt{Llama-3.1-8B} model compounds them for epistemic questions when more passages support the \emph{no} perspective; the larger model does so for the \emph{yes} perspective. For aleatoric questions the interaction appears to reverse, pushing the model away from the expert perspective. This reversal warrants further investigation.
 
 \section{Discussion}
+\label{sec:discussion}
 
-\begin{itemize}
-    \item add the note about how ordering has an impact -- this will naturally be a limitation of RAG systems and *may* contribute to a lack of pluralistic groundedness. Would depend on the retrieval layer.
-    \item we discuss only one social choice feature "expertise" across a number of questions in multiple domains, larger experiments must be done to see how expertise will interact with other feature (e.g. given an epistemic question about buddhism, should a practising buddhist's opinion be valued more than a christian who is a buddhist scholar? given an aleatoric question about giving candy to kids of particular days should a parent's opinion be more valued than a non-parent's opinion?)
-\end{itemize}
+\begin{figure}
+    \includegraphics[width=\linewidth]{images/stability.png}
+    \caption{Stability under passage order and selection perturbations. The x-axis shows the percentage of questions for which the model's answer changed under different random seeds or passages.}
+    \label{fig:stability}
+\end{figure}
+
+Where evidence sits in the prompt strongly affects the model's answer. This is a known limitation of RAG systems \citep{liu-etal-2024-lost,veseli2025positional,yi-etal-2026-attention,naphade-2026-rational}, and it bears directly on the pluralistic groundedness of their answers. We ran two further experiments: one shuffled the order of the passages under five random seeds, the other re-drew the sample of passages for each answer. Figure~\ref{fig:stability} shows that the answers are unstable under both perturbations. The smaller \texttt{Llama-3.1-8B} model is the more sensitive to passage selection, the larger \texttt{Llama-3.3-70B} model to passage order. The instability originates in the retrieval layer, but whether the aggregation layer can mitigate it remains open; a mixture of models, or inference-time strategies robust to order and selection, may help. We leave this to future work.
+
+This instability clouds the results above, since separating the effects of passage order and selection from the effects of expertise signals will take further experiments. Even so, the inconsistency of the byline and register manipulations across models and question types suggests that the models are \emph{sensitive} to expertise signals without being aligned with human judgements of expertise. The compounding of the two manipulations under larger evidence sets further suggests that models grow more sensitive to register as evidence accumulates, which threatens the robustness of their answers.
+
+Further work is also needed on how expertise interacts with other social choice features. We examine one feature, expertise, across questions in multiple domains; larger experiments must establish how it combines with others. Given an epistemic question about Buddhism, should a practising Buddhist's opinion outweigh that of a Christian who studies Buddhism? Given an aleatoric question about giving children candy on particular days, should a parent's opinion outweigh a non-parent's?

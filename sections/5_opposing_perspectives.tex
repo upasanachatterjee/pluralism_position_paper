@@ -1,6 +1,8 @@
 \section{Alternative Views}
 \label{sec:alternative_views}
 
+We focus our discussion on applying social choice principles to the aggregation layer of RAG systems. However, as our experiments show, the retrieval layer has a strong impact on the model's answer. Ultimately, if diverse outputs are removed at the retrieval layer, then the aggregation layer will have minimal impact on the model's answer. 
+
 \begin{itemize}
     \item When is this actually useful? Are people using RAG for non-factual questions?
     \item Social choice is the wrong formalism. Voting rules assume a fixed set of alternatives and comparable ballots, and a document corpus supplies neither.
