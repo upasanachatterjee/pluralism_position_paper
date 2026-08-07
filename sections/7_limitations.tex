@@ -1,8 +1,8 @@
 \section*{Limitations}
 \label{sec:limitations}
 
-\begin{itemize}
-    \item logistics of applying social choice to retrieval/agg
-    \item small western skewed sample
-    \item resolving this into a useable module/framework still requires much more work
-\end{itemize}
+We evaluate only two models from one family, \texttt{Llama-3.1-8B} and \texttt{Llama-3.3-70B}, so scale and family are confounded, along with the evidence ordering confound discussed earlier. We use one benchmark and one question format, yes-or-no questions on contested topics, which leaves open how models aggregate evidence for questions admitting graded answers. The questions are unevenly distributed across categories (Appendix~\ref{appendix_sub:dataset}), and only ten survive the filter matching epistemic against aleatoric questions within a category.
+
+Moreover, \textsc{ConflictingQA} draws on English-language web text, and its contested questions, the professions we name in bylines, and what our rewrites treat as an academic register all encode Anglophone norms. This skew is particularly pronounced in the aleatoric questions, whose legitimate perspectives are those most likely to vary across cultures \citep{awad2018moral,pmlr-v235-conitzer24a}.
+
+Finally, we offer a diagnostic framing, not a working module. We do not specify how a system should detect question type at inference, identify the perspectives present in a corpus, or choose an aggregation rule once it has them.

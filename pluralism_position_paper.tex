@@ -75,11 +75,7 @@
 \begin{document}
 \maketitle
 \begin{abstract}
-% TODO: Replace the placeholder. The abstract should state the position in its
-% first two sentences (pluralism is lost at retrieval, before generation can
-% recover it), name social choice as the framing, and report what the initial
-% benchmark experiments show. Write it last, once Sections 3 and 4 are settled.
-Lorem Ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+Groundedness in retrieval-augmented generation is usually defined as fidelity to the retrieved context. We argue that this definition is incomplete. Between retrieval and generation, a model decides which claims to privilege and how to reconcile conflict, so a system can cite its context faithfully while distorting the balance of perspectives that context contains. Interpretive RAG therefore faces a failure mode distinct from hallucination: unrepresentative aggregation. We frame this as a problem of social choice, which names the normative choices current pipelines make implicitly, among them how much weight expertise deserves and whether that weight should depend on the question. We run intial experiments on \textsc{ConflictingQA}, where we manipulate the byline and register of evidence passages corresponding to epistemic and aleatoric questions. We find that models do not consistently follow expected patterns of expertise prioritization for epistemic questions and expertise non-prioritization for aleatoric questions. These initial results suggest that future work must evaluate interpretive RAG systems not only for fidelity to evidence, but also for representativeness of the perspectives that evidence contains.
 \end{abstract}
 
 \input{sections/1_introduction}

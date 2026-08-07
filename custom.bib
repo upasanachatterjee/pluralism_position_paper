@@ -372,3 +372,69 @@ url={https://openreview.net/forum?id=vlUk8z8LaM}
     ISBN = "979-8-89176-390-6",
     abstract = "The performance of Large Language Models (LLMs) is significantly sensitive to the contextual position of information in the input. To investigate the mechanism behind this positional bias, our extensive experiments reveal a consistent phenomenon we term the attention basin: when presented with a sequence of structured items (e.g., retrieved documents or few-shot examples), models systematically assign higher attention to the items at the beginning and end of the sequence, while neglecting those in the middle. Crucially, our analysis further reveals that allocating higher attention to critical information is key to enhancing model performance. Based on these insights, we introduce Attention-Driven Reranking (AttnRank), a two-stage framework that (i) estimates a model{'}s intrinsic positional attention preferences using a small calibration set, and (ii) reorders retrieved documents or few-shot examples to align the most salient content with these high-attention positions. AttnRank is a model-agnostic, training-free, and plug-and-play method with minimal computational overhead. Experiments on multi-hop QA and few-shot in-context learning tasks demonstrate that AttnRank achieves substantial improvements across 10 large language models of varying architectures and scales, without modifying model parameters or training procedures."
 }
+@inproceedings{wiratunga2024cbr,
+  title={CBR-RAG: case-based reasoning for retrieval augmented generation in LLMs for legal question answering},
+  author={Wiratunga, Nirmalie and Abeyratne, Ramitha and Jayawardena, Lasal and Martin, Kyle and Massie, Stewart and Nkisi-Orji, Ikechukwu and Weerasinghe, Ruvan and Liret, Anne and Fleisch, Bruno},
+  booktitle={International Conference on Case-Based Reasoning},
+  pages={445--460},
+  year={2024},
+  organization={Springer}
+}
+@article{edge2024local,
+  title={From local to global: A graph rag approach to query-focused summarization},
+  author={Edge, Darren and Trinh, Ha and Cheng, Newman and Bradley, Joshua and Chao, Alex and Mody, Apurva and Truitt, Steven and Metropolitansky, Dasha and Ness, Robert Osazuwa and Larson, Jonathan},
+  journal={arXiv preprint arXiv:2404.16130},
+  year={2024}
+}
+@inproceedings{sarthi2024raptor,
+  title={Raptor: Recursive abstractive processing for tree-organized retrieval},
+  author={Sarthi, Parth and Abdullah, Salman and Tuli, Aditi and Khanna, Shubh and Goldie, Anna and Manning, Christopher},
+  booktitle={International Conference on Learning Representations},
+  volume={2024},
+  pages={32628--32649},
+  year={2024}
+}
+@article{mmagesh2025hallucinationfree,
+author = {Magesh, Varun and Surani, Faiz and Dahl, Matthew and Suzgun, Mirac and Manning, Christopher D. and Ho, Daniel E.},
+title = {Hallucination-Free? Assessing the Reliability of Leading AI Legal Research Tools},
+journal = {Journal of Empirical Legal Studies},
+volume = {22},
+number = {2},
+pages = {216-242},
+doi = {https://doi.org/10.1111/jels.12413},
+url = {https://onlinelibrary.wiley.com/doi/abs/10.1111/jels.12413},
+eprint = {https://onlinelibrary.wiley.com/doi/pdf/10.1111/jels.12413},
+abstract = {ABSTRACT Legal practice has witnessed a sharp rise in products incorporating artificial intelligence (AI). Such tools are designed to assist with a wide range of core legal tasks, from search and summarization of caselaw to document drafting. However, the large language models used in these tools are prone to “hallucinate,” or make up false information, making their use risky in high-stakes domains. Recently, certain legal research providers have touted methods such as retrieval-augmented generation (RAG) as “eliminating” or “avoid[ing]” hallucinations, or guaranteeing “hallucination-free” legal citations. Because of the closed nature of these systems, systematically assessing these claims is challenging. In this article, we design and report on the first preregistered empirical evaluation of AI-driven legal research tools. We demonstrate that the providers' claims are overstated. While hallucinations are reduced relative to general-purpose chatbots (GPT-4), we find that the AI research tools made by LexisNexis (Lexis+ AI) and Thomson Reuters (Westlaw AI-Assisted Research and Ask Practical Law AI) each hallucinate between 17\% and 33\% of the time. We also document substantial differences between systems in responsiveness and accuracy. Our article makes four key contributions. It is the first to assess and report the performance of RAG-based proprietary legal AI tools. Second, it introduces a comprehensive, preregistered dataset for identifying and understanding vulnerabilities in these systems. Third, it proposes a clear typology for differentiating between hallucinations and accurate legal responses. Last, it provides evidence to inform the responsibilities of legal professionals in supervising and verifying AI outputs, which remains a central open question for the responsible integration of AI into law.},
+year = {2025}
+}
+@Article{nishisako2025reducing,
+author="Nishisako, Sota
+and Higashi, Takahiro
+and Wakao, Fumihiko",
+title="Reducing Hallucinations and Trade-Offs in Responses in Generative AI Chatbots for Cancer Information: Development and Evaluation Study",
+journal="JMIR Cancer",
+year="2025",
+month="Sep",
+day="11",
+volume="11",
+pages="e70176",
+keywords="artificial intelligence; AI; generative AI chatbot; generative pretrained transformer; GPT; retrieval-augmented generation; RAG; hallucination; medical information provision; cancer information service",
+abstract="Background: Generative artificial intelligence (AI) is increasingly used to find information. Providing accurate information is essential to support patients with cancer and their families; however, information returned by generative AIs is sometimes wrong. Returning wrong information is called hallucination. Retrieval-augmented generation (RAG), which supplements large language model (LLM) outputs with relevant external sources, has the potential to reduce hallucinations. Although RAG has been proposed as a promising technique, its real-world performance in public health communication remains underexplored. Objective: This study aimed to examine cancer information returned by generative AIs with RAG using cancer-specific information sources and general internet searches to determine whether using RAG with reliable information sources reduces the hallucination rates of generative AI chatbots. Methods: We developed 6 types of chatbots by combining 3 patterns of reference information with 2 versions of LLMs. Thus, GPT-4 and GPT-3.5 chatbots that use cancer information service (CIS) information, Google information, and no reference information (conventional chatbots) were developed. A total of 62 cancer-related questions in Japanese were compiled from public sources. All responses were generated automatically and independently reviewed by 2 experienced clinicians. The reviewers assessed the presence of hallucinations, defined as medically harmful or misinformation. We compared hallucination rates across chatbot types and calculated odds ratios (OR) using generalized linear mixed-effects models. Subgroup analyses were also performed based on whether questions were covered by CIS content. Results: For the chatbots that used information from CIS, the hallucination rates were 0{\%} for GPT-4 and 6{\%} for GPT-3.5, whereas those for chatbots that used information from Google were 6{\%} and 10{\%} for GPT-4 and GPT-3.5, respectively. For questions on information that is not issued by CIS, the hallucination rates for Google-based chatbots were 19{\%} for GPT-4 and 35{\%} for GPT-3.5. The hallucination rates for conventional chatbots were approximately 40{\%}. Using reference data from Google searches generated more hallucinations than using CIS data, with an OR of 9.4 (95{\%} CI 1.2‐17.5, P<.01); the OR for the conventional chatbot was 16.1 (95{\%} CI 3.7‐50.0, P<.001). While conventional chatbots always generated a response, the RAG-based chatbots sometimes declined to answer when information was lacking. The conventional chatbots responded to all questions, but the response rate decreased (36{\%} to 81{\%}) for RAG-based chatbots. For questions on information not covered by CIS, the CIS chatbots did not respond, while the Google chatbots generated responses in 52{\%} of the cases for GPT-4 and 71{\%} for GPT-3.5. Conclusions: Using RAG with reliable information sources significantly reduces the hallucination rate of generative AI chatbots and increases the ability to admit lack of information, making them more suitable for general use, where users need to be provided with accurate information. ",
+issn="2369-1999",
+doi="10.2196/70176",
+url="https://cancer.jmir.org/2025/1/e70176",
+url="https://doi.org/10.2196/70176"
+}
+@inproceedings{wu2026from,
+title={From Conflict to Consensus: Boosting Medical Reasoning via Multi-Round Agentic {RAG}},
+author={Wenhao Wu and Zhentao Tang and Yafu Li and Shixiong Kai and Mingxuan Yuan and Zhenhong Sun and Chunlin Chen and Zhi Wang},
+booktitle={Forty-third International Conference on Machine Learning},
+year={2026},
+url={https://openreview.net/forum?id=S7lpdz7NAW}
+}
+@inproceedings{ovadya2025position,
+  title={Position: Democratic AI is Possible. The Democracy Levels Framework Shows How It Might Work.},
+  author={Ovadya, Aviv and Redman, Kyle and Thorburn, Luke and Chen, Quan Ze and Smith, Oliver and Devine, Flynn and Konya, Andrew and Milli, Smitha and Revel, Manon and Feng, Kevin and others},
+  booktitle={Forty-second International Conference on Machine Learning Position Paper Track},
+  year={2025}
+}
