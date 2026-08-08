@@ -17,6 +17,8 @@
 \usepackage{array}
 \usepackage{framed}
 \usepackage{subcaption}
+\usepackage{multirow}
+\usepackage{enumitem}
 
 % Category colours (pastel)
 \definecolor{medicine}{HTML}{F8D7DA}
@@ -41,17 +43,13 @@
 \newcommand{\cat}[2]{%
 {\setlength{\fboxsep}{1.5pt}\colorbox{#1}{\scriptsize #2}}}
 
-\title{Why Are You Asking? When and Where Social Choice is Needed In RAG Pipelines}
+\title{Faithful but Unrepresentative: The Aggregation Gap in Retrieval-Augmented Generation}
 
 
 \author{Upasana Chatterjee \\
 Department of Computer Science \\
   Columbia University \\
-  \texttt{uc2143@columbia.edu} \\\And
-  Arvind Raghavan \\
-  Department of Computer Science\\
-  Columbia University \\
-  \texttt{arvind.raghavan@columbia.edu} \\}
+  \texttt{uc2143@columbia.edu}}
 
 %\author{
 %  \textbf{First Author\textsuperscript{1}},
@@ -73,7 +71,7 @@ Department of Computer Science \\
 \begin{document}
 \maketitle
 \begin{abstract}
-Groundedness in retrieval-augmented generation is usually defined as fidelity to the retrieved context. We argue that this definition is incomplete. Between retrieval and generation, a model decides which claims to privilege and how to reconcile conflict, so a system can cite its context faithfully while distorting the balance of perspectives that context contains. Interpretive RAG therefore faces a failure mode distinct from hallucination: unrepresentative aggregation. We frame this as a problem of social choice, which names the normative choices current pipelines make implicitly, among them how much weight expertise deserves and whether that weight should depend on the question. We run intial experiments on \textsc{ConflictingQA}, where we manipulate the byline and register of evidence passages corresponding to epistemic and aleatoric questions. We find that models do not consistently follow expected patterns of expertise prioritization for epistemic questions and expertise non-prioritization for aleatoric questions. These initial results suggest that future work must evaluate interpretive RAG systems not only for fidelity to evidence, but also for representativeness of the perspectives that evidence contains.
+Groundedness in retrieval-augmented generation is usually defined as fidelity to the retrieved context. We argue that this definition is incomplete. A model can faithfully report every perspective it retrieves while still producing an answer that privileges only a subset of the perspectives represented in the evidence. Between retrieval and generation, the model must decide which perspectives to foreground and how to reconcile conflicts among them, yet these interpretive decisions are invisible to conventional measures of groundedness. We identify \emph{unrepresentative aggregation} as a distinct failure mode of interpretive RAG: an answer may be faithful to its retrieved evidence while misrepresenting the perspectives that evidence contains. We use the existing \textsc{ConflictingQA} dataset \citep{wan-etal-2024-evidence} for proof-of-concept experiments that vary the presentation of conflicting perspectives while holding their substantive claims fixed. The results provide preliminary evidence that models' answers are sensitive to how perspectives are balanced, presented, and ordered. We argue that interpretive RAG should therefore be evaluated not only for fidelity to retrieved evidence, but also for the representativeness with which it aggregates conflicting perspectives.
 \end{abstract}
 
 \input{sections/1_introduction}

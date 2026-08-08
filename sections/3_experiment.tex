@@ -1,11 +1,11 @@
 \section{Initial Benchmark Experiments on \textsc{ConflictingQA}}
 \label{sec:experiment}
 
-To illustrate our social choice formulation of pluralistic groundedness, we conduct a proof-of-concept experiment on \textsc{ConflictingQA} \citep{wan-etal-2024-evidence}, a benchmark designed to evaluate retrieval-augmented generation under conflicting evidence. We view evidence aggregation as a social choice process, where retrieved passages represent competing viewpoints and the language model implements the aggregation rule that determines how much influence each viewpoint receives.
+To illustrate our social choice formulation of pluralistic groundedness, we conduct a proof-of-concept experiment on \textsc{ConflictingQA} \citep{wan-etal-2024-evidence}, a benchmark designed to evaluate retrieval-augmented generation under conflicting evidence. We view evidence aggregation as a social choice process: retrieved passages represent competing viewpoints and the language model implements the aggregation rule that determines how much influence each viewpoint receives.
 
 Our experiment\footnote{Code can be found on GitHub. Link anonymised for submission.} investigates one fundamental property of this aggregation rule: whether RAG systems privilege expertise appropriately. We distinguish between \emph{epistemic} and \emph{aleatoric} questions. Epistemic questions concern an objective state of the world and therefore warrant greater weight for relevant expertise: for \emph{Can stalactites form underwater?}, a geologist's judgement should outweigh a layperson's. Aleatoric questions admit several simultaneously valid perspectives, and expertise should not dominate: for \emph{Can money buy happiness?}, an economist's judgement should not automatically override a layperson's. The appropriate weighting of expertise is therefore question-dependent, not uniform across retrieval settings.
 
-To test this hypothesis, we independently manipulate two signals of expertise within retrieved passages: byline and register. Both cues change the perceived authority of a passage without altering its substantive content. They therefore let us ask two questions: do RAG systems respond to genuine indicators of expertise, to superficial signals of authority, or to both; and does that weighting shift appropriately between epistemic and aleatoric questions?
+To test this hypothesis, we independently manipulate two signals of expertise within retrieved passages: byline and register. Both cues change the perceived authority of a passage without altering its substantive content. They therefore let us ask two questions: do RAG systems respond to genuine indicators of expertise, to superficial signals of authority, or to both; and does that weighting shift appropriately between epistemic and aleatoric questions? We test two models that differ in size and training data, \texttt{Llama-3.1-8B} and \texttt{Llama-3.3-70B}, to establish whether one aggregation rule holds across both.
 
 We outline the dataset and experimental design below. Appendix~\ref{appendix:experiment} describes the setup in full.
 
@@ -15,8 +15,8 @@ We outline the dataset and experimental design below. Appendix~\ref{appendix:exp
 
 \begin{figure}[ht!]
     \centering
-    \includegraphics[width=0.9\linewidth]{images/experiment.png}
-    \caption{Experimental settings.}
+    \includegraphics[width=0.9\linewidth]{images/experiment.pdf}
+    \caption{Experimental settings. We manually curate a set of epistemic and aleatoric questions from \textsc{ConflictingQA}. We then manipulate the retrieved passages in three ways: byline, register, and evidence balance. The byline and register perturbations test whether models privilege expertise appropriately, while the evidence balance perturbation tests whether models respond to changes in the distribution of evidence.}
     \label{fig:experiment}
 \end{figure}
 
@@ -27,17 +27,20 @@ We construct controlled probes that vary properties of the retrieved evidence wh
 \paragraph{Expertise and Rhetorical Authority.}
 The first probe examines how models weight signals of authority when aggregating conflicting evidence. Authority is sometimes a legitimate consideration: when evaluating whether aspartame is linked to cancer, the judgement of a qualified scientist may deserve more weight than the opinion of a non-expert. Models may also, however, mistake rhetorical confidence or formal style for expertise.
 
-To separate these effects, we create evidence variants that alter how a passage is presented while holding its underlying claims constant. The \emph{register} manipulation rewrites the passage either in an academic register, using formal and hedged specialist language, or in a casual register, using conversational language. The \emph{byline} manipulation tags the passage with author metadata naming the writer's profession. Together they test whether models respond to authority cues appropriately.
+To separate these effects, we create evidence variants that alter how a passage is presented while holding its underlying claims constant. The \emph{register} perturbation rewrites the passage in an academic register, using formal and hedged specialist language. The \emph{byline} perturbation tags the passage with author metadata naming the writer's profession. Together they test whether models respond to authority cues appropriately.
 
 
 \paragraph{Evidence Balance.}
-The second probe varies the number of passages supporting each answer. The balanced conditions test whether models judge consistently when the amount of evidence changes but the balance of perspectives holds fixed. The asymmetric conditions test whether models track differences in evidence coverage; the one-sided conditions test whether models introduce unsupported disagreement when only one position is represented.
+The second probe varies the number of passages supporting each answer. We compare the effects when showing either two or six evidence passages, balanced across the two answer options. These conditions test whether models judge consistently when the amount of evidence changes but the balance of perspectives holds fixed. 
 
 Concretely, we ask three questions:
-\begin{itemize}
-    \item[RQ1:] Do models privilege expertise when the question is epistemic and not when the question is aleatoric?
-    \item[RQ2:] How do models interact with the register and byline manipulations?
-    \item[RQ3:] How do models respond to changes in the number of passages supporting each answer?
-\end{itemize}
+\begin{enumerate}[
+    label=RQ\arabic*,
+    leftmargin=*
+]
+    \item Do models privilege expertise on epistemic questions and withhold that privilege on aleatoric ones?
+    \item How do the register and byline perturbations interact?
+    \item How do models respond to changes in the number of passages supporting each answer?
+\end{enumerate}
 
 Together, these probes test whether models aggregate evidence by appropriate signals rather than by simple heuristics. A faithful aggregator should respond to meaningful differences between sources, such as expertise when domain knowledge is relevant, and should ignore superficial features such as rhetorical confidence. It should also adjust its conclusions when the distribution of evidence changes, without introducing unsupported perspectives.
